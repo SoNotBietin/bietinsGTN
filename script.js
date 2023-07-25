@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             guessInput.disabled = true;
             checkButton.disabled = true;
             newGameButton.style.display = "block";
+            startBackgroundAnimation();
         }
     }
 
@@ -37,6 +38,31 @@ document.addEventListener("DOMContentLoaded", function () {
         guessInput.disabled = false;
         checkButton.disabled = false;
         newGameButton.style.display = "none";
+    }
+
+    function startBackgroundAnimation() {
+        const backgroundAnimation = document.createElement("div");
+        backgroundAnimation.id = "background-animation";
+        document.body.appendChild(backgroundAnimation);
+
+        let opacity = 0.2;
+        let size = 1;
+
+        function animate() {
+            opacity -= 0.005;
+            size += 0.2;
+
+            backgroundAnimation.style.opacity = opacity;
+            backgroundAnimation.style.transform = `scale(${size})`;
+
+            if (opacity <= 0) {
+                document.body.removeChild(backgroundAnimation);
+            } else {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        requestAnimationFrame(animate);
     }
 
     checkButton.addEventListener("click", checkGuess);
